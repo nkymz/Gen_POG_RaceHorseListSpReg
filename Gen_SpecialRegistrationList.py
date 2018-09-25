@@ -13,7 +13,7 @@ PATH = os.getenv("HOMEDRIVE", "None") + os.getenv("HOMEPATH", "None") + "/Dropbo
 HTMLPATH = (PATH + "PO_race_horse_spreg_list.html").replace("\\", "/")
 WEEKDAY = ["(月)", "(火)", "(水)", "(木)", "(金)", "(土)", "(日)"]
 
-global mynow
+mynow = datetime.datetime.today()
 
 
 def get_race_horse_list(horse_list):
@@ -110,6 +110,7 @@ def get_race_horse_list(horse_list):
 
 
 def out_race_horse_list(race_horse_list):
+    global mynow
     f = open(HTMLPATH, mode="w", encoding="utf-8")
 
     prev_date = None
@@ -186,18 +187,8 @@ def out_race_horse_list(race_horse_list):
 
 
 def gen_spreg_list():
-    global mynow
-
-    mynow = datetime.datetime.today()
     out_race_horse_list(get_race_horse_list(get_poh_list()))
 
 
 if __name__ == "__main__":
     gen_spreg_list()
-
-
-
-
-
-
-
