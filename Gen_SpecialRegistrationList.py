@@ -42,7 +42,10 @@ def get_race_horse_list(horse_list):
         r = mysession.get(date_url)  # requestsを使って、webから取得
         soup = BeautifulSoup(r.text, 'lxml')  # r.contentだと文字化けする
 
-        for i, scheduled_horse in enumerate(soup.find("table").find_all("tr")):
+        scheduled_horses_table = soup.find("table")
+        if not scheduled_horses_table:
+            continue
+        for i, scheduled_horse in enumerate(scheduled_horses_table.find_all("tr")):
             if i == 0:
                 continue
 
@@ -177,7 +180,7 @@ def out_race_horse_list(race_horse_list):
         prev_race_time = race_time
         prev_track = track
 
-    f.write('</ul></li></ul><p>終末オーナーLOVEPOP</p>\n')
+    f.write('</ul></li></ul>\n')
 
     s = str(mynow.year) + "/" + ("0" + str(mynow.month))[-2:] + "/" + ("0" + str(mynow.day))[-2:] \
         + WEEKDAY[mynow.weekday()] + " " + ("0" + str(mynow.hour))[-2:] + ":" + ("0" + str(mynow.minute))[-2:]
